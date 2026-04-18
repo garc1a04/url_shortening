@@ -1,100 +1,452 @@
-# DOCS
+---
+title: URL Shorten v1.0.0
+language_tabs:
+  - javascript: Node.js
+  - shell: cURL
+language_clients:
+  - javascript: ""
+  - shell: ""
+toc_footers: []
+includes: []
+search: false
+highlight_theme: darkula
+headingLevel: 2
+
 ---
 
-### [POST] /shorten
-#### Request Body
+<!-- Generator: Widdershins v4.0.1 -->
 
-| Required | Schema |
-| -------- | ------ |
-|  Yes | **application/json**: [CreateShortenDTO](#createshortendto-schema)<br> |
+<h1 id="url-shorten">URL Shorten v1.0.0</h1>
 
-#### Responses
+> Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-| Code | Description | Schema |
-| ---- | ----------- | ------ |
-| 200 |  | **application/json**: [ResponseShortenDTO](#responseshortendto-schema)<br> |
+The API provide endpoints to create, retrieve, update, and delete short URLs
 
-### [GET] /shorten/{code}
-#### Parameters
+Base URLs:
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ------ |
-| code | path |  | Yes | string |
+<h1 id="url-shorten-urlshorten">URLShorten</h1>
 
-#### Responses
+## URLShortenController_createShortenURL
 
-| Code | Description | Schema |
-| ---- | ----------- | ------ |
-| default |  | **application/json**: [ResponseShortenDTO](#responseshortendto-schema)<br> |
+<a id="opIdURLShortenController_createShortenURL"></a>
 
-### [PUT] /shorten/{code}
-#### Parameters
+> Code samples
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ------ |
-| code | path |  | Yes | string |
+```javascript
+const inputBody = '{
+  "url": "https://nestjs.com"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
 
-#### Request Body
+fetch('/shorten',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
 
-| Required | Schema |
-| -------- | ------ |
-|  Yes | **application/json**: [CreateShortenDTO](#createshortendto-schema)<br> |
+```
 
-#### Responses
+```shell
+# You can also use wget
+curl -X POST /shorten \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
 
-| Code | Description | Schema |
-| ---- | ----------- | ------ |
-| default |  | **application/json**: [ResponseShortenDTO](#responseshortendto-schema)<br> |
+```
 
-### [DELETE] /shorten/{code}
-#### Parameters
+`POST /shorten`
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ------ |
-| code | path |  | Yes | string |
+> Body parameter
 
-#### Responses
+```json
+{
+  "url": "https://nestjs.com"
+}
+```
 
-| Code | Description | Schema |
-| ---- | ----------- | ------ |
-| default |  | **application/json**: [ResponseOk](#responseok-schema)<br> |
+<h3 id="urlshortencontroller_createshortenurl-parameters">Parameters</h3>
 
-### [GET] /shorten/{code}/stats
-#### Parameters
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateShortenDTO](#schemacreateshortendto)|true|none|
 
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ------ |
-| code | path |  | Yes | string |
+> Example responses
 
-#### Responses
+> 200 Response
 
-| Code | Description | Schema |
-| ---- | ----------- | ------ |
-| default |  | **application/json**: [ResponseShortenDTO](#responseshortendto-schema)<br> |
+```json
+{
+  "id": "1",
+  "url": "https://nestjs.com",
+  "short_code": "nx82p1",
+  "created_at": "2024-03-20T14:30:00Z",
+  "updated_at": "2024-03-21T10:00:00Z",
+  "access_count": "150"
+}
+```
 
----
-### Schemas
+<h3 id="urlshortencontroller_createshortenurl-responses">Responses</h3>
 
-#### CreateShortenDTO Schema
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|[ResponseShortenDTO](#schemaresponseshortendto)|
 
-| Name | Type | Description | Required |
-| ---- | ---- | ----------- | -------- |
-| url | string (uri) | The original long URL to be shortened<br>*Example:* `"https://nestjs.com"` | Yes |
+<aside class="success">
+This operation does not require authentication
+</aside>
 
-#### ResponseShortenDTO Schema
+## URLShortenController_getOriginalURL
 
-| Name | Type | Description | Required |
-| ---- | ---- | ----------- | -------- |
-| id | number | The unique identifier of the shortened URL<br>*Example:* `"1"` | Yes |
-| url | string | The original destination URL<br>*Example:* `"https://nestjs.com"` | Yes |
-| short_code | string | The unique short code generated for the URL<br>*Example:* `"nx82p1"` | Yes |
-| created_at | string | Timestamp when the short URL was created<br>*Example:* `"2024-03-20T14:30:00Z"` | Yes |
-| updated_at | string | Timestamp of the last update<br>*Example:* `"2024-03-21T10:00:00Z"` | Yes |
-| access_count | number | Total number of times the shortened URL was accessed<br>*Example:* `"150"` | No |
+<a id="opIdURLShortenController_getOriginalURL"></a>
 
-#### ResponseOk Schema
+> Code samples
 
-| Name | Type | Description | Required |
-| ---- | ---- | ----------- | -------- |
-| status | boolean |  | Yes |
-| mensagem | string |  | Yes |
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/shorten/{code}',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```shell
+# You can also use wget
+curl -X GET /shorten/{code} \
+  -H 'Accept: application/json'
+
+```
+
+`GET /shorten/{code}`
+
+<h3 id="urlshortencontroller_getoriginalurl-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|path|string|true|none|
+
+> Example responses
+
+> default Response
+
+```json
+{
+  "id": "1",
+  "url": "https://nestjs.com",
+  "short_code": "nx82p1",
+  "created_at": "2024-03-20T14:30:00Z",
+  "updated_at": "2024-03-21T10:00:00Z",
+  "access_count": "150"
+}
+```
+
+<h3 id="urlshortencontroller_getoriginalurl-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|default|Default|none|[ResponseShortenDTO](#schemaresponseshortendto)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## URLShortenController_updateShortenURL
+
+<a id="opIdURLShortenController_updateShortenURL"></a>
+
+> Code samples
+
+```javascript
+const inputBody = '{
+  "url": "https://nestjs.com"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/shorten/{code}',
+{
+  method: 'PUT',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```shell
+# You can also use wget
+curl -X PUT /shorten/{code} \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+```
+
+`PUT /shorten/{code}`
+
+> Body parameter
+
+```json
+{
+  "url": "https://nestjs.com"
+}
+```
+
+<h3 id="urlshortencontroller_updateshortenurl-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|path|string|true|none|
+|body|body|[CreateShortenDTO](#schemacreateshortendto)|true|none|
+
+> Example responses
+
+> default Response
+
+```json
+{
+  "id": "1",
+  "url": "https://nestjs.com",
+  "short_code": "nx82p1",
+  "created_at": "2024-03-20T14:30:00Z",
+  "updated_at": "2024-03-21T10:00:00Z",
+  "access_count": "150"
+}
+```
+
+<h3 id="urlshortencontroller_updateshortenurl-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|default|Default|none|[ResponseShortenDTO](#schemaresponseshortendto)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## URLShortenController_deleteShortenURL
+
+<a id="opIdURLShortenController_deleteShortenURL"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/shorten/{code}',
+{
+  method: 'DELETE',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```shell
+# You can also use wget
+curl -X DELETE /shorten/{code} \
+  -H 'Accept: application/json'
+
+```
+
+`DELETE /shorten/{code}`
+
+<h3 id="urlshortencontroller_deleteshortenurl-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|path|string|true|none|
+
+> Example responses
+
+> default Response
+
+```json
+{
+  "status": true,
+  "mensagem": "string"
+}
+```
+
+<h3 id="urlshortencontroller_deleteshortenurl-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|default|Default|none|[ResponseOk](#schemaresponseok)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## URLShortenController_statsShortenURL
+
+<a id="opIdURLShortenController_statsShortenURL"></a>
+
+> Code samples
+
+```javascript
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('/shorten/{code}/stats',
+{
+  method: 'GET',
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+```shell
+# You can also use wget
+curl -X GET /shorten/{code}/stats \
+  -H 'Accept: application/json'
+
+```
+
+`GET /shorten/{code}/stats`
+
+<h3 id="urlshortencontroller_statsshortenurl-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|code|path|string|true|none|
+
+> Example responses
+
+> default Response
+
+```json
+{
+  "id": "1",
+  "url": "https://nestjs.com",
+  "short_code": "nx82p1",
+  "created_at": "2024-03-20T14:30:00Z",
+  "updated_at": "2024-03-21T10:00:00Z",
+  "access_count": "150"
+}
+```
+
+<h3 id="urlshortencontroller_statsshortenurl-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|default|Default|none|[ResponseShortenDTO](#schemaresponseshortendto)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+# Schemas
+
+<h2 id="tocS_CreateShortenDTO">CreateShortenDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemacreateshortendto"></a>
+<a id="schema_CreateShortenDTO"></a>
+<a id="tocScreateshortendto"></a>
+<a id="tocscreateshortendto"></a>
+
+```json
+{
+  "url": "https://nestjs.com"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|url|string(uri)|true|none|The original long URL to be shortened|
+
+<h2 id="tocS_ResponseShortenDTO">ResponseShortenDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponseshortendto"></a>
+<a id="schema_ResponseShortenDTO"></a>
+<a id="tocSresponseshortendto"></a>
+<a id="tocsresponseshortendto"></a>
+
+```json
+{
+  "id": "1",
+  "url": "https://nestjs.com",
+  "short_code": "nx82p1",
+  "created_at": "2024-03-20T14:30:00Z",
+  "updated_at": "2024-03-21T10:00:00Z",
+  "access_count": "150"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|number|true|none|The unique identifier of the shortened URL|
+|url|string|true|none|The original destination URL|
+|short_code|string|true|none|The unique short code generated for the URL|
+|created_at|string|true|none|Timestamp when the short URL was created|
+|updated_at|string|true|none|Timestamp of the last update|
+|access_count|number|false|none|Total number of times the shortened URL was accessed|
+
+<h2 id="tocS_ResponseOk">ResponseOk</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponseok"></a>
+<a id="schema_ResponseOk"></a>
+<a id="tocSresponseok"></a>
+<a id="tocsresponseok"></a>
+
+```json
+{
+  "status": true,
+  "mensagem": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|status|boolean|true|none|none|
+|mensagem|string|true|none|none|
